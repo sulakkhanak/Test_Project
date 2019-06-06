@@ -1,0 +1,67 @@
+﻿@model IEnumerable<TEST_PROJECT.Models.Person>
+
+@{
+    ViewBag.Title = "Test";
+    Layout = "~/Views/Shared/_LayoutNav.cshtml";
+}
+
+
+<div>
+    @Html.ActionLink("Insert Person", "Index")
+</div>
+<br/>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Person ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Telephone
+            </th>
+            <th>
+                NIC No
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+               
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PersonID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telephone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NICNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditPerson", new { PersonID = @item.PersonID })|@Html.ActionLink("Delete", "DeletePerson", new { PersonID = @item.PersonID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<TEST_PROJECT.Models.Person>
+
+@{
+    ViewBag.Title = "ShowPerson";
+    Layout = "~/Views/Shared/_LayoutNav.cshtml";
+}
+
+@*<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Person ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Telephone
+            </th>
+            <th>
+                NIC No
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Email
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.PersonID
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Telephone
+                </td>
+                <td>
+                    @item.NICNo
+                </td>
+                <td>
+                    @item.Address
+                </td>
+                <td>
+                    @item.Email
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

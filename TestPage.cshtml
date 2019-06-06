@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "TestPage";
+    Layout = "~/Views/Shared/_LayoutNav.cshtml";
+}
+
+<h2>TestPage</h2>
+
+<div class="custype">
+    <div class="row">
+        <label class="col-md-2 control-label">Customer Type :</label>
+        <div class="col-md-5">
+            @Html.DropDownList("FromCustomerType", new SelectList(Enumerable.Empty<SelectListItem>()))
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-md-2 control-label">Category Type :</label>
+        <div class="col-md-5">
+            @Html.DropDownList("FromCategoryType", new SelectList(Enumerable.Empty<SelectListItem>()))
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-md-2 control-label">Gadgets :</label>
+        <div class="col-md-5">
+            @Html.DropDownList("FromGadgets", new SelectList(Enumerable.Empty<SelectListItem>()))
+        </div>
+    </div>
+
+</div>
+
+<script>
+    
+    $(document).ready(function () {
+
+        $.ajax({
+            url: '@Url.Action("GetCustomerType", "Test3")',
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            datatype: JSON,
+            success: function (result) {
+                $(result).each(function () {
+                    $("#FromCustomerType").append($("<option></option>").val(this.CustomerID).html(this.CustomerType));
+                });
+            },
+            error: function (data) { }
+        });
+
+        $.ajax({
+            url: '@Url.Action("GetCategoryType", "Test3")',
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            datatype: JSON,
+            success: function (result) {
+                $(result).each(function () {
+                    $("#FromCategoryType").append($("<option></option>").val(this.CategoryID).html(this.CategoryType));
+                });
+            },
+            error: function (data) { }
+        });
+    });
+
+    $("#FromCategoryType").change(function () {
+       // alert("Selected value is : " + document.getElementById("FromCategoryType").value);
+
+        $.ajax({
+            url: '@Url.Action("GetGadgets", "Test3")',
+            type: "GET",
+            data: {
+                CategoryID: $("#FromCategoryType").val()
+            },
+            //data: JSON.stringify({
+
+            //    Name: $("#Name").val(),
+            //    Telephone: $("#Telephone").val(),
+            //    NICNo: $("#NICNo").val(),
+            //    Address: $("#Address").val(),
+            //    Email: $("#Email").val()
+            //}),
+            contentType: "application/json; charset=utf-8",
+            datatype: JSON,
+            success: function (result) {
+                $(result).each(function () {
+                    $("#FromGadgets").append($("<option></option>").val(this.GadgetsID).html(this.GadgetName + " - Rs." + this.Price));
+                });
+            },
+            error: function (data) { }
+        });
+    });
+
+</script>
+
+<style>
+ 
+
+    .row {
+        margin-bottom: 15px;
+    }
+</style>

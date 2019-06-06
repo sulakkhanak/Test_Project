@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "AddCategoryType";
+    Layout = "~/Views/Shared/_LayoutNav.cshtml";
+
+}
+
+<div class="cattype">
+
+    <h3>Add Category Type</h3>
+    <div class="row">
+        <label class="col-md-2 control-label">Category Type :</label>
+        <div class="col-md-5">
+            <input id='CategoryType' name='CategoryType' />
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-md-2 control-label" for="btncatSubmit"></label>
+        <div class="col-md-5">
+            <button id="btncatSubmit" name="btncatSubmit" class="btn btn-primary">ADD</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    $("#btncatSubmit").click(function () {
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateCategoryType", "Test3")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+
+                CategoryType: $("#CategoryType").val()
+
+            }),
+            dataType: "json",
+
+            success: UpdateCategoryTypeOnSuccess
+        });
+
+    });
+
+    function UpdateCategoryTypeOnSuccess() {
+
+        alert("Updated Category Type Successfully");
+        document.getElementById("CategoryType").value = '';
+    }
+
+</script>
+
+<style>
+
+    .row {
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        margin-bottom: 20px;
+    }
+
+    .cattype {
+        border: 1px solid grey;
+        margin: 10px;
+        padding: 10px;
+    }
+</style>

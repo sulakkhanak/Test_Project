@@ -1,0 +1,109 @@
+﻿@model TEST_PROJECT.Models.Person
+@{
+    ViewBag.Title = "Index";
+    //Layout = null;
+    Layout = "~/Views/Shared/_LayoutNav.cshtml";
+}
+
+<br />
+<div class="per_info">
+      
+        <div class="row">
+            <label class="col-md-2 control-label">Name :</label>
+            <div class="col-md-5">
+                @Html.TextBoxFor(p => p.Name)
+            </div>
+        </div>      
+
+        <div class="row">
+            <label class="col-md-2 control-label">Telephone :</label>
+            <div class="col-md-5">
+                @Html.TextBoxFor(p => p.Telephone)
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-md-2 control-label">NIC No. : </label>
+            <div class="col-md-5">
+                @Html.TextBoxFor(p => p.NICNo)
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-md-2 control-label">Address :</label>
+            <div class="col-md-5">
+                @Html.TextBoxFor(p => p.Address)
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-md-2 control-label">Email :</label>
+            <div class="col-md-5">
+                @Html.TextBoxFor(p => p.Email)
+            </div>
+        </div>
+
+        <div class="row">
+            <label class="col-md-2 control-label" for="btnSubmit"></label>
+            <div class="col-md-5">
+                <button id="btnSubmit" name="btnSubmit" class="btn btn-primary">Submit</button>
+                @Html.ActionLink("Back to List", "Test")
+            </div>
+        </div>    
+
+   
+</div>
+
+<style>
+    .per_info {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .row {
+        margin-bottom: 15px;
+    }
+</style>
+
+<script>
+
+    //$("#loginForm").validate();
+
+    $("#btnSubmit").click(function () {
+        //alert("hi");
+
+        $.ajax({
+           type: "POST",
+            url: '@Url.Action("CreatePerson", "Test3")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+
+                Name: $("#Name").val(),
+                Telephone: $("#Telephone").val(),
+                NICNo: $("#NICNo").val(),
+                Address: $("#Address").val(),
+                Email: $("#Email").val()
+            }),
+            dataType: "json",
+
+            success: CreatePersonOnSuccess
+        });
+
+    });
+
+    function CreatePersonOnSuccess() {
+
+        alert("Created New Person Successfully");
+        clear();
+    }
+
+    function clear()
+    {
+        document.getElementById("Name").value = '';
+        document.getElementById("Telephone").value = '';
+        document.getElementById("NICNo").value = '';
+        document.getElementById("Address").value = '';
+        document.getElementById("Email").value = '';
+        
+    }
+</script>

@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "AddCustomerType";
+    Layout = "~/Views/Shared/_LayoutNav.cshtml";
+
+}
+
+
+<div class="custype">
+
+    <h3>Add Customer Type</h3>
+    <div class="row">
+        <label class="col-md-2 control-label">Customer Type :</label>
+        <div class="col-md-5">
+            <input id='CustomerType' name='CustomerType' />
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-md-2 control-label" for="btnSubmit"></label>
+        <div class="col-md-5">
+            <button id="btnSubmit" name="btnSubmit" class="btn btn-primary">ADD</button>
+        </div>
+
+    </div>  
+
+</div>
+
+<script>
+
+    $("#btnSubmit").click(function () {
+
+        alert($("#CustomerType").val());
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("CreateCustomerType", "Test3")',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({
+
+                CustomerType: $("#CustomerType").val()
+            }),
+            dataType: "json",
+
+            success: UpdateCustomerTypeOnSuccess
+        });
+
+    });
+
+    function UpdateCustomerTypeOnSuccess() {
+
+        alert("Updated Customer Type Successfully");
+        document.getElementById("CustomerType").value = '';
+    }
+ 
+</script>
+
+<style>
+    .row {
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        margin-bottom: 20px;
+    }
+
+    .custype, .cattype, .gadgets {
+        border: 1px solid grey;
+        margin: 10px;
+        padding: 10px;
+    }
+</style>

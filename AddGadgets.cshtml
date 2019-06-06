@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "AddGadgets";
+    Layout = "~/Views/Shared/_LayoutNav.cshtml";
+
+}
+
+<div class="gadgets">
+
+    <h3>Add Gadgets</h3>
+
+    <div class="row">
+        <label class="col-md-2 control-label">Gadget Name :</label>
+        <div class="col-md-5">
+            <input id='GadgetName' name='GadgetName' />
+        </div>
+    </div>
+
+    <div class="row">
+        <label class="col-md-2 control-label">Unit Price :</label>
+        <div class="col-md-5">
+            <input id='Price' name='Price' />
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-md-2 control-label">Category Type :</label>
+        <div class="col-md-5">
+            <div id="cat-checkbox">
+                @if (ViewBag.CheckBoxList != null)
+                {
+                    foreach (SelectListItem item in ViewBag.CheckBoxList)
+                    {
+                        <div style="font-size: 13px; margin-bottom:10px;"><input type="checkbox" name="@item.Text" value="@item.Value" />@item.Text</div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <label class="col-md-2 control-label" for="btncatSubmit"></label>
+        <div class="col-md-5">
+            <button id="btngadSubmit" name="btngadSubmit" class="btn btn-primary">ADD</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    $("#btngadSubmit").click(function () {
+
+        var list = $("#cat-checkbox > div > input[type=checkbox]");
+        console.log(list);
+        var len = list.length;
+
+        $.each(list, function () {
+            console.log(this);
+            var CategoryType = this.value;
+            var logic = this.checked;
+
+            if (logic == true) {
+
+                console.log(CategoryType);
+                console.log($("#GadgetName").val());
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("CreateGadgets", "Test3")',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({
+
+                        GadgetName: $("#GadgetName").val(),
+                        Price: $("#Price").val(),
+                        CategoryID: CategoryType
+
+                    }),
+                    dataType: "json",
+                    success: function (data) {
+
+                        document.getElementById("this.name").checked = false;
+                       // alert("Updated Gadgets Successfully");
+                        
+                    }
+
+                });
+            }
+
+        });
+
+        document.getElementById("GadgetName").value = '';
+        document.getElementById("Price").value = '';
+
+    });
+
+</script>
+
+<style>
+    .row {
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        margin-bottom: 20px;
+    }
+
+    .gadgets {
+        border: 1px solid grey;
+        margin: 10px;
+        padding: 10px;
+    }
+</style>
